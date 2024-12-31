@@ -1,0 +1,1 @@
+// This scene takes the name of the player and creates a scoreboard and puts him there. + a gameover scene
