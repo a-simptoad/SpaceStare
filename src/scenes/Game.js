@@ -7,6 +7,7 @@ import { Player } from '../gameObjects/Player';
 
 export class Game extends Scene
 {
+    cursors=null;
     constructor ()
     {
         super('Game');
@@ -19,28 +20,26 @@ export class Game extends Scene
 
         // Creating a new player object and passing this scene as parameter.
         this.player = new Player({scene: this});
+        this.cursors = this.input.keyboard.createCursorKeys();
 
-        // bullet = this.physics.add.sprite(0, 0, "bullet").setOrigin(player.originX, player.originY).setScale(3);
-        // bullet.setCollideWorldBounds(true, 1);
+        this.cursors.space.on('down', ()=>{
+            this.player.shoot();
+        });
     }
 
     update(){
         //Playing the background animation
         this.background.anims.play("bg", true);
 
-        var cursors = this.input.keyboard.createCursorKeys();
-        if(cursors.up.isDown){
+        
+        if(this.cursors.up.isDown){
             this.player.move("up");
         }
-        else if (cursors.down.isDown){
+        else if (this.cursors.down.isDown){
             this.player.move("down");
         }
         else{
             this.player.move();
-        }
-
-        if(cursors.space.isDown){
-            this.player.shoot();
         }
     }
 }

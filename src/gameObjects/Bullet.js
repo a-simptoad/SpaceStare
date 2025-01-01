@@ -14,7 +14,7 @@ export class Bullet extends GameObjects.Sprite
         super(scene, x, y, "bullet"); 
         this.name = "bullet";
 
-        this.speed = Math.GetSpeed(450,1);
+        this.speed = Math.GetSpeed(1500 ,1);
     }
 
     fire(x, y, texture = "bullet"){
@@ -28,8 +28,7 @@ export class Bullet extends GameObjects.Sprite
 
     update()
     {
-        // this.x = this.speed + this.x;
-        console.log("update function works!!!")
+        this.x = this.speed + this.x;
 
         if(this.x > this.scene.sys.canvas.width || this.x < 0){
             this.setActive(false);

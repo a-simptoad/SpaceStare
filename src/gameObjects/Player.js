@@ -8,6 +8,8 @@ import { Physics, GameObjects} from "phaser";
 import { Bullet } from "./Bullet";
 
 export class Player extends Physics.Arcade.Image {
+    bullets = null;
+    
     constructor({scene}){
         super(scene, 20, 200, 'ship');
         this.setOrigin(0, 0)
@@ -21,8 +23,9 @@ export class Player extends Physics.Arcade.Image {
         this.bullets = this.scene.physics.add.group({
             classType: Bullet,
             maxSize: 100,
-            runchildUpdate: true
         });
+
+        this.bullets.runChildUpdate = true; 
     }
 
     move(dir){
@@ -40,7 +43,7 @@ export class Player extends Physics.Arcade.Image {
     shoot(){
         const bullet = this.bullets.get();
         if(bullet){
-            bullet.fire(this.x +100 , this.y);
+            bullet.fire(this.x +80 , this.y+48);
         }
         
     }
