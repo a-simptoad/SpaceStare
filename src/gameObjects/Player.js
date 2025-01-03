@@ -47,4 +47,8 @@ export class Player extends Physics.Arcade.Image {
         }
         
     }
+
+    damage(){
+        this.setTexture("ship2");
+    }
 }

@@ -11,7 +11,10 @@ export class Preloader extends Phaser.Scene
 
         this.load.spritesheet('background', 'spacebg.png', {frameWidth: 1024, frameHeight: 512 });        
         this.load.image('ship', 'shuttle.png');
+        this.load.image('ship2', 'shuttle_2.png');
         this.load.spritesheet('bullet','bullet.png',{frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('rock', 'asteroid.png',{frameWidth: 100, frameHeight: 100});
+        this.load.spritesheet('rock2', 'asteroid2.png', {frameWidth: 100, frameHeight: 100});
 
     }
     create(){
@@ -34,6 +37,17 @@ export class Preloader extends Phaser.Scene
                 end: 3
             }),
             frameRate: 4,
+            repeat: -1
+        });
+
+        // Animation for asteroid
+        this.anims.create({
+            key: "rock",
+            frames: this.anims.generateFrameNames("rock", {
+                start: 0,
+                end: 49
+            }),
+            frameRate: 20,
             repeat: -1
         });
 

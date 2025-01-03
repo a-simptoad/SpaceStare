@@ -2,15 +2,21 @@
 //destroy them and get points.
 
 
-import { Scene } from 'phaser';
+import { Math, Scene } from 'phaser';
 import { Player } from '../gameObjects/Player';
+import { Asteroid } from '../gameObjects/Asteroid';
 
 export class Game extends Scene
 {
-    cursors=null;
     constructor ()
     {
         super('Game');
+    }
+
+    spawn(){
+        // randomisation logic for generating asteroids
+        var rand = Math.Between(0,512);
+        this.rock = this.rocks.get(1074, rand);
     }
 
     create ()
@@ -25,13 +31,47 @@ export class Game extends Scene
         this.cursors.space.on('down', ()=>{
             this.player.shoot();
         });
+
+        // Creating a new asteroid object --> just one for now 
+        this.rocks = this.physics.add.group({
+            classType: Asteroid,
+            runChildUpdate: true
+        });
+
+        // Calls a callback function every 2 sec
+        var timer = this.time.addEvent({
+            delay: 2000,
+            callback: this.spawn,
+            callbackScope: this,
+            loop: true
+        });
+
+        // Detects overlap b/w bullet and asteroid and destroys both
+        this.physics.add.overlap(this.player.bullets, this.rocks, (rock, bullet) =>{
+            bullet.setActive(false);
+            bullet.setVisible(false);
+            bullet.destroy();
+            
+            // rock.destroyRock();
+            rock.setActive(false);
+            rock.setVisible(false);
+            rock.destroy();
+        });
+
+        // Detects overlap b/w player and asteroid and destroys asteroid + damages ship
+        this.physics.add.overlap(this.player, this.rocks, (player, rock)=> {
+            this.player.damage();
+            // rock.destroyRock();
+            rock.setActive(false);
+            rock.setVisible(false);
+            rock.destroy();
+        })
     }
 
     update(){
         //Playing the background animation
         this.background.anims.play("bg", true);
 
-        
         if(this.cursors.up.isDown){
             this.player.move("up");
         }
