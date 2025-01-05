@@ -5,6 +5,9 @@
 import { Math, Scene } from 'phaser';
 import { Player } from '../gameObjects/Player';
 import { Asteroid } from '../gameObjects/Asteroid';
+import WebGazerTracker from '../WebGazer';
+
+var webGazerTracker;
 
 export class Game extends Scene
 {
@@ -65,21 +68,19 @@ export class Game extends Scene
             rock.setActive(false);
             rock.setVisible(false);
             rock.destroy();
-        })
+        });
+
+        webGazerTracker = new WebGazerTracker();
+        webGazerTracker.startTracking();
     }
 
     update(){
         //Playing the background animation
         this.background.anims.play("bg", true);
 
-        if(this.cursors.up.isDown){
-            this.player.move("up");
-        }
-        else if (this.cursors.down.isDown){
-            this.player.move("down");
-        }
-        else{
-            this.player.move();
-        }
+        const gaze = webGazerTracker.getGazeCoordinates();
+        gaze.y = Phaser.Math.Clamp(gaze.y, 0, 1024);
+
+        this.player.move(gaze.y);
     }
 }

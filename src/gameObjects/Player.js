@@ -28,11 +28,11 @@ export class Player extends Physics.Arcade.Image {
         this.bullets.runChildUpdate = true; 
     }
 
-    move(dir){
-        if(dir ==="up"){
+    move(gazeY){
+        if(gazeY > this.y){
             this.setVelocityY(-160);
         }
-        else if (dir === "down"){
+        else if (gazeY < this.y){
             this.setVelocityY(160);
         }
         else{
