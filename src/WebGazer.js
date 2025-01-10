@@ -2,6 +2,10 @@ class WebGazerTracker {
     constructor(){
         this.gazeX = 400;
         this.gazeY = 300;
+
+        // webgazer.showVideo(false);
+        webgazer.showFaceOverlay(false);
+        // webgazer.setVideoViewerSize("200", "200");
     }
 
     startTracking(){
@@ -26,6 +30,12 @@ class WebGazerTracker {
         if(typeof webgazer !== 'undefined'){
             webgazer.end();
         }
+    }
+    pause(){
+        webgazer.pause();
+    }
+    resume(){
+        webgazer.resume();
     }
 }
 

@@ -81,6 +81,15 @@ export class Game extends Scene
         const gaze = webGazerTracker.getGazeCoordinates();
         gaze.y = Phaser.Math.Clamp(gaze.y, 0, 1024);
 
+        console.log(gaze.y);
+
         this.player.move(gaze.y);
+
+        if(this.input.keyboard.addKey('p').isDown){
+            webGazerTracker.pause();
+        }
+        else if (this.input.keyboard.addKey('r').isDown){
+            webGazerTracker.resume();
+        }
     }
 }

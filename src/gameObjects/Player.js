@@ -29,11 +29,14 @@ export class Player extends Physics.Arcade.Image {
     }
 
     move(gazeY){
-        if(gazeY > this.y){
-            this.setVelocityY(-160);
-        }
-        else if (gazeY < this.y){
+
+        console.log("this is the players y: %d", this.y);
+        
+        if(gazeY > this.y+175){
             this.setVelocityY(160);
+        }
+        else if (gazeY < this.y+175){
+            this.setVelocityY(-160);
         }
         else{
             this.setVelocity(0);
