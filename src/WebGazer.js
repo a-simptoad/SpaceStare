@@ -3,7 +3,7 @@ class WebGazerTracker {
         this.gazeX = 400;
         this.gazeY = 300;
 
-        // webgazer.showVideo(false);
+        webgazer.showVideo(false);
         webgazer.showFaceOverlay(false);
         // webgazer.setVideoViewerSize("200", "200");
     }

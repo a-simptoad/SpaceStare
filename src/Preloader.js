@@ -52,6 +52,6 @@ export class Preloader extends Phaser.Scene
         });
 
         //Moving to the next scene
-        this.scene.start("Game");
+        this.scene.start("StartScene");
     }
 }

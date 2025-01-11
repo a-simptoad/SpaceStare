@@ -1,4 +1,6 @@
 import { Game as MainGame } from './scenes/Game';
+import { StartScene } from './scenes/StartScene';
+import { Calibration } from './scenes/Calibration';
 import { AUTO, Scale,Game } from 'phaser';
 import { Preloader } from './Preloader';
 
@@ -11,7 +13,12 @@ const config = {
     parent: 'game-container',
     backgroundColor: '#000000',
     scale: {
-        autoCenter: Scale.CENTER_BOTH
+        autoCenter: Scale.CENTER_BOTH,
+        mode: Scale.FIT,
+        max:{
+            width: 1024,
+            height: 512
+        }
     },
     physics:{
         default: 'arcade',
@@ -22,6 +29,8 @@ const config = {
     },
     scene: [
         Preloader,
+        StartScene,
+        Calibration,
         MainGame
     ]
 };
