@@ -10,7 +10,7 @@ import { Math, GameObjects } from "phaser";
 
 export class Asteroid extends GameObjects.Sprite
 {
-    speed = Math.GetSpeed(1000, 1);
+    speed = Math.GetSpeed(2000, 1);
     constructor(scene, x, y){
         super(scene, x, y, "rock");
         this.scene = scene;
