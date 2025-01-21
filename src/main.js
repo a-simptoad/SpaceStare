@@ -1,4 +1,5 @@
 import { Game as MainGame } from './scenes/Game';
+import { EndScene } from './scenes/EndScene';
 import { StartScene } from './scenes/StartScene';
 import { Calibration } from './scenes/Calibration';
 import { AUTO, Scale,Game } from 'phaser';
@@ -31,7 +32,8 @@ const config = {
         Preloader,
         StartScene,
         Calibration,
-        MainGame
+        MainGame,
+        EndScene
     ]
 };
 

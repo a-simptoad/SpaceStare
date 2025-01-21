@@ -57,7 +57,11 @@ export class StartScene extends Scene{
         .setOrigin(0.5, 0.5)
         .setAlpha(0.7)
         .setInteractive()
-        .on("pointerdown", () => {/* end Scene with 0 points*/});
+        .on("pointerdown", () => {
+            this.registry.set("score", 0);
+            webgazer.end();
+            this.scene.start("EndScene");
+        });
 
         this.add.text(this.scale.width/2, this.scale.height/5*2, "Start Game", {color: '#000000'}).setOrigin(0.5, 0.5);
         this.add.text(this.scale.width/2, this.scale.height/5*3, "Callibrate", {color: '#000000'}).setOrigin(0.5, 0.5);

@@ -6,6 +6,8 @@ import { Math, Scene } from 'phaser';
 import { Player } from '../gameObjects/Player';
 import { Asteroid } from '../gameObjects/Asteroid';
 
+var scoreText;
+
 export class Game extends Scene
 {
     constructor ()
@@ -27,6 +29,7 @@ export class Game extends Scene
 
         // Creating a new player object and passing this scene as parameter.
         this.player = new Player({scene: this});
+        this.score = 0;
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.cursors.space.on('down', ()=>{
@@ -47,6 +50,8 @@ export class Game extends Scene
             loop: true
         });
 
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
+
         // Detects overlap b/w bullet and asteroid and destroys both
         this.physics.add.overlap(this.player.bullets, this.rocks, (rock, bullet) =>{
             bullet.setActive(false);
@@ -57,6 +62,10 @@ export class Game extends Scene
             rock.setActive(false);
             rock.setVisible(false);
             rock.destroy();
+
+            // Increase points
+            this.score += 10;
+            scoreText.setText('Score: ' + this.score);
         });
 
         // Detects overlap b/w player and asteroid and destroys asteroid + damages ship
@@ -73,6 +82,12 @@ export class Game extends Scene
             if(data){
                 this.gazeY = data.y;
             }    
+        });
+
+        // In-game quit button to change to the gameover scene
+        this.add.rectangle(1024 - 50, 512 - 50, 20, 20, 0xff0000).setInteractive().on("pointerdown",()=>{
+            this.scene.start("EndScene");
+            this.registry.set('score', this.score);
         });
     }
 
