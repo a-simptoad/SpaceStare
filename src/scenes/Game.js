@@ -14,6 +14,7 @@ export class Game extends Scene
     {
         super('Game');
         this.gazeY = 400;
+        this.spawnTimer = 0;
     }
 
     spawn(){
@@ -40,14 +41,6 @@ export class Game extends Scene
         this.rocks = this.physics.add.group({
             classType: Asteroid,
             runChildUpdate: true
-        });
-
-        // Calls a callback function every 2 sec
-        var timer = this.time.addEvent({
-            delay: 2000,
-            callback: this.spawn,
-            callbackScope: this,
-            loop: true
         });
 
         scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
@@ -77,18 +70,34 @@ export class Game extends Scene
             rock.destroy();
         });
 
+        // webgazer.applyKalmanFilter(false);
+        const worker = new Worker("src/scenes/filter_worker.js");
+
         //setting listener for prediction data
-        webgazer.setGazeListener((data, elapsedTime) =>{
-            if(data){
+        let lastGazeUpdate = 0;
+        webgazer.setGazeListener((data) =>{
+            const now = performance.now();
+            if(data && now - lastGazeUpdate > 50){
+                worker.postMessage(data.y);
+                worker.onmessage = (event) =>{
+                    this.gazeY = event.data;
+                };
                 this.gazeY = data.y;
-            }    
+                lastGazeUpdate = now;
+            }
         });
 
         // In-game quit button to change to the gameover scene
         this.add.rectangle(1024 - 50, 512 - 50, 20, 20, 0xff0000).setInteractive().on("pointerdown",()=>{
             this.scene.start("EndScene");
             this.registry.set('score', this.score);
+            webgazer.pause();
         });
+
+        // pause/resume for webgazer
+        this.input.keyboard.on('keydown-P', () => webgazer.pause());
+        this.input.keyboard.on('keydown-R', () => webgazer.resume());
+        
     }
 
     update(){
@@ -99,12 +108,10 @@ export class Game extends Scene
         this.gazeY = Phaser.Math.Clamp(this.gazeY, 0, 1024);
         this.player.move(this.gazeY);
 
-        // Pause/Resume for webgazer
-        if(this.input.keyboard.addKey('p').isDown){
-            webgazer.pause();
-        }
-        else if (this.input.keyboard.addKey('r').isDown){
-            webgazer.resume();
+        this.spawnTimer += this.game.loop.delta; // Accumulate delta time
+        if (this.spawnTimer > 2000) {
+            this.spawn();
+            this.spawnTimer = 0; // Reset timer
         }
     }
 }

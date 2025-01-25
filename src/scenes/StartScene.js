@@ -22,7 +22,8 @@ export class StartScene extends Scene{
         // Set the video feed to false
         webgazer.showVideo(false);
         webgazer.showFaceOverlay(false);
-        // webgazer.setVideoViewerSize(320, 240);
+        webgazer.showPredictionPoints(false);
+        webgazer.applyKalmanFilter(false);
         this.startwebgazer();
         
     }
@@ -37,9 +38,9 @@ export class StartScene extends Scene{
         .setOrigin(0.5, 0.5)
         .setAlpha(0.7)
         .setInteractive()
-        .on("pointerdown", () => {
+        .on("pointerdown", async () => {
             this.scene.start("Game");
-            webgazer.resume();
+            await webgazer.resume();
         });
 
         //calibrate Scene button

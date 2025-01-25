@@ -9,6 +9,7 @@ import { Bullet } from "./Bullet";
 
 export class Player extends Physics.Arcade.Image {
     bullets = null;
+    health = 4;
     
     constructor({scene}){
         super(scene, 20, 200, 'ship');
@@ -48,6 +49,10 @@ export class Player extends Physics.Arcade.Image {
     }
 
     damage(){
-        this.setTexture("ship2");
+        this.health--;
+        if(this.health == 3) this.setTexture("ship2");
+        else if(this.health == 2) this.setTexture("ship3");
+        else if (this.health == 1) this.setTexture("ship4");
+        else {console.log("game is over");};
     }
 }

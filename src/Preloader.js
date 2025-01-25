@@ -11,7 +11,9 @@ export class Preloader extends Phaser.Scene
 
         this.load.spritesheet('background', 'spacebg.png', {frameWidth: 1024, frameHeight: 512 });        
         this.load.image('ship', 'shuttle.png');
-        this.load.image('ship2', 'shuttle_2.png');
+        this.load.image('ship2', 'shuttle_3.png');
+        this.load.image('ship3', 'shuttle_2.png');
+        this.load.image('ship4', 'shuttle_4.png');
         this.load.spritesheet('bullet','bullet.png',{frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('rock', 'asteroid.png',{frameWidth: 100, frameHeight: 100});
         this.load.spritesheet('rock2', 'asteroid2.png', {frameWidth: 100, frameHeight: 100});
