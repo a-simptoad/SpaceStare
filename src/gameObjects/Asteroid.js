@@ -11,7 +11,6 @@ import { Math, GameObjects } from "phaser";
 export class Asteroid extends GameObjects.Sprite
 {
     speed = Math.GetSpeed(3000, 1);
-    damage = false;
 
     constructor(scene, x, y){
         super(scene, x, y, "rock");
@@ -31,7 +30,6 @@ export class Asteroid extends GameObjects.Sprite
         this.y = Math.Wrap(this.y, -70, 550);
 
         if (this.x < 10){
-            damage = true;
             this.destroyRock();
         }
     }

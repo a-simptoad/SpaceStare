@@ -1,7 +1,7 @@
 //This scene contains the starting menu which will have start/callibrate/quit buttons 
 // and the title of the game.
 
-import { Scene } from "phaser"; 
+import { Scene } from "phaser";
 
 export class StartScene extends Scene{
 

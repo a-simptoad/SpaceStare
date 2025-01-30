@@ -7,9 +7,32 @@ import { Player } from '../gameObjects/Player';
 import { Asteroid } from '../gameObjects/Asteroid';
 
 var scoreText;
+let detector;
 
 export class Game extends Scene
 {
+    async startFaceMesh(){
+        const model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
+        const detectorConfig = {
+        runtime: 'mediapipe',
+        solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh',
+        };
+        detector = await faceLandmarksDetection.createDetector(model, detectorConfig);
+    }
+
+    async createLandmarks(){
+        const faces = await detector.estimateFaces(document.querySelector('video'));
+        const detect_worker = new Worker('src/scenes/blink_detection_worker.js');
+        if(faces.length > 0){
+            detect_worker.postMessage(faces);
+            detect_worker.onmessage = (event) =>{
+                if(event.data === "Blink-Detected"){
+                    this.player.shoot();
+                }
+            }
+        }
+    }
+
     constructor ()
     {
         super('Game');
@@ -82,7 +105,6 @@ export class Game extends Scene
                 worker.onmessage = (event) =>{
                     this.gazeY = event.data;
                 };
-                this.gazeY = data.y;
                 lastGazeUpdate = now;
             }
         });
@@ -98,6 +120,7 @@ export class Game extends Scene
         this.input.keyboard.on('keydown-P', () => webgazer.pause());
         this.input.keyboard.on('keydown-R', () => webgazer.resume());
         
+        this.startFaceMesh();
     }
 
     update(){
@@ -113,5 +136,7 @@ export class Game extends Scene
             this.spawn();
             this.spawnTimer = 0; // Reset timer
         }
+        
+        this.createLandmarks();
     }
 }

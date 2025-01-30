@@ -14,7 +14,7 @@ export class Bullet extends GameObjects.Sprite
         super(scene, x, y, "bullet"); 
         this.name = "bullet";
 
-        this.speed = Math.GetSpeed(5000 ,1);
+        this.speed = Math.GetSpeed(80000 ,1);
     }
 
     fire(x, y, texture = "bullet"){
