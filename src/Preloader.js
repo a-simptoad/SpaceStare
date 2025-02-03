@@ -9,6 +9,7 @@ export class Preloader extends Phaser.Scene
     preload(){
         this.load.setPath("assets");
 
+        this.load.image('title', 'title.png');
         this.load.spritesheet('background', 'spacebg.png', {frameWidth: 1024, frameHeight: 512 });        
         this.load.image('ship', 'shuttle.png');
         this.load.image('ship2', 'shuttle_3.png');
@@ -17,6 +18,8 @@ export class Preloader extends Phaser.Scene
         this.load.spritesheet('bullet','bullet.png',{frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('rock', 'asteroid.png',{frameWidth: 100, frameHeight: 100});
         this.load.spritesheet('rock2', 'asteroid2.png', {frameWidth: 100, frameHeight: 100});
+        this.load.image('score', 'scoreboard.png');
+        this.load.image('retry', 'retry.png');
 
     }
     create(){
