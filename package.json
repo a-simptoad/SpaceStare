@@ -25,8 +25,6 @@
         "vite": "^5.3.1"
     },
     "dependencies": {
-        "blink-detection": "^1.2.1",
-        "clmtrackr": "^1.1.2",
         "phaser": "^3.87.0"
     }
 }
