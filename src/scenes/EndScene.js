@@ -36,8 +36,7 @@ export class EndScene extends Scene {
     this.add.rectangle(512, this.scale.height / 9 * 8, 70, 30, 0xff0000,0)
       .setInteractive()
       .on("pointerdown", () => {
-        this.scene.start('Game');
-        webgazer.resume();
+        this.scene.start('StartScene');
       });
   }
 
